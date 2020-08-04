@@ -59,4 +59,12 @@ begin
   DBEdit10.Clear();
 end;
 
+Initialization
+
+RegisterClass(TFAluno);
+
+Finalization
+
+UnRegisterClass(TFAluno);
+
 end.

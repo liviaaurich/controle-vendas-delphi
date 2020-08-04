@@ -16,11 +16,8 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TFLogin, FLogin);
-  Application.CreateForm(TFAluno, FAluno);
-  Application.CreateForm(TFUsuario, FUsuario);
   Application.CreateForm(TDM, DM);
-  Application.CreateForm(TFTela, FTela);
+  Application.CreateForm(TFLogin, FLogin);
   Application.CreateForm(TFPesquisaTela, FPesquisaTela);
   Application.CreateForm(TFTelaBase, FTelaBase);
   Application.CreateForm(TFMenu, FMenu);

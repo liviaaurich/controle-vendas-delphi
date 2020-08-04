@@ -155,6 +155,10 @@ object FTelaBase: TFTelaBase
     object tbFiltros: TTabSheet
       Caption = 'Filtros para Pesquisa'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GFiltros: TGroupBox
         Left = 0
         Top = 0

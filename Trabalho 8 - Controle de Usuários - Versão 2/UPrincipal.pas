@@ -34,23 +34,16 @@ uses UMenu;
 
 procedure TFLogin.btnEntrarClick(Sender: TObject);
 begin
-  DM.QUsuarios.SQL.Clear;
-  DM.QUsuarios.SQL.Text := 'select * from usuarios where login like :login and senha like :senha';
-  DM.QUsuarios.Parameters.ParamByName('login').Value := Edit1.Text;
-  DM.QUsuarios.Parameters.ParamByName('senha').Value := Edit2.Text;
-
+  DSDataSet.DataSet.Close;
+  DSDataSet.DataSet.Open;
   try
-    DM.QUsuarios.Open;
-    if not(DM.QUsuarios.IsEmpty) then
+    if (DSDataSet.DataSet.Locate('login;senha', VarArrayOf([Edit1.Text, Edit2.Text]), [])) then
     begin
-      FMenu.idUsuarioLogado := DM.QUsuarios.FieldByName('id').AsInteger;
-      DM.QUsuarios.SQL.Text := 'select * from usuarios';
       FMenu.ShowModal;
     end
     else
     begin
       ShowMessage('Login/Senha incorretos.');
-      DM.QUsuarios.SQL.Clear;
     end;
 
   Except

@@ -10,23 +10,26 @@ object FMenu: TFMenu
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  Menu = MainMenu1
+  Menu = MMenu
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object MainMenu1: TMainMenu
+  object MMenu: TMainMenu
     Left = 72
     Top = 48
     object Configurao1: TMenuItem
       Caption = 'Configura'#231#227'o'
       object MIUsuarios: TMenuItem
         Caption = 'Usu'#225'rios'
+        Hint = 'FUsuario'
         OnClick = MIUsuariosClick
       end
       object MITela: TMenuItem
         Caption = 'Tela'
+        Hint = 'FTela'
         OnClick = MITelaClick
       end
     end
@@ -34,6 +37,7 @@ object FMenu: TFMenu
       Caption = 'Cadastros'
       object MIAlunos: TMenuItem
         Caption = 'Alunos'
+        Hint = 'FAluno'
         OnClick = MIAlunosClick
       end
     end

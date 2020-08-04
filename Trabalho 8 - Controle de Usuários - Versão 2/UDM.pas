@@ -62,6 +62,21 @@ type
     MRelUserTelaalterar: TBooleanField;
     MRelUserTelaexcluir: TBooleanField;
     MRelUserTelaimprimir: TBooleanField;
+    QLogin: TADOQuery;
+    PLogin: TDataSetProvider;
+    MLogin: TClientDataSet;
+    MLoginid: TAutoIncField;
+    MLoginlogin: TStringField;
+    MLoginsenha: TStringField;
+    MLoginemail: TStringField;
+    DSLogin: TDataSource;
+    QPermissoes: TADOQuery;
+    PPermissoes: TDataSetProvider;
+    MPermissoes: TClientDataSet;
+    DSPermissoes: TDataSource;
+    MPermissoesidUsuario: TIntegerField;
+    MPermissoesidTela: TIntegerField;
+    MPermissoesname: TStringField;
     procedure MAlunoAfterPost(DataSet: TDataSet);
     procedure MAlunoAfterDelete(DataSet: TDataSet);
     procedure MAlunoAfterCancel(DataSet: TDataSet);
@@ -85,6 +100,7 @@ type
     procedure MRelUserTelaAfterCancel(DataSet: TDataSet);
     procedure MRelUserTelaAfterDelete(DataSet: TDataSet);
     procedure MRelUserTelaAfterPost(DataSet: TDataSet);
+    procedure QPermissoesBeforeOpen(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -230,9 +246,13 @@ begin
   QNotUserTela.Parameters[0].Value := MUsuariosid.AsInteger;
 end;
 
+procedure TDM.QPermissoesBeforeOpen(DataSet: TDataSet);
+begin
+  QPermissoes.Parameters[0].Value := MLoginid.AsInteger;
+end;
+
 procedure TDM.QUserTelaBeforeOpen(DataSet: TDataSet);
 begin
   QUserTela.Parameters[0].Value := MUsuariosid.AsInteger;
 end;
-
 end.

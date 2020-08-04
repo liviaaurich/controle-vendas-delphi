@@ -8,7 +8,7 @@ uses
 
 type
   TFMenu = class(TForm)
-    MainMenu1: TMainMenu;
+    MMenu: TMainMenu;
     Configurao1: TMenuItem;
     Cadastros1: TMenuItem;
     MIUsuarios: TMenuItem;
@@ -20,8 +20,9 @@ type
     procedure MITelaClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
-    procedure acessarTela(tela: String);
     procedure verificarPermissao();
+    procedure FormCreate(Sender: TObject);
+    procedure abrirForm(nome: string);
   private
     { Private declarations }
   public
@@ -36,71 +37,70 @@ implementation
 uses UAluno, UUsuario, UTela;
 
 {$R *.dfm}
-procedure TFMenu.FormShow(Sender: TObject);
+procedure TFMenu.FormCreate(Sender: TObject);
 begin
-  DM.QUserTela.Parameters.ParamByName('id').Value := idUsuarioLogado;
-  DM.QUserTela.Open;
+  FormShow(nil);
 end;
 
-procedure TFMenu.acessarTela(Tela : String);
+procedure TFMenu.FormShow(Sender: TObject);
 begin
-  DM.QPTela.Close;
-  DM.QPTela.SQL.Clear;
-  DM.QPTela.SQL.Text := 'select id from tela where name like :name';
-  DM.QPTela.Parameters.ParamByName('name').Value := Tela;
-  DM.QPTela.Open;
+  idUsuarioLogado := DM.MLoginid.Value;
+  verificarPermissao();
 end;
 
 procedure TFMenu.verificarPermissao();
 begin
-  DM.QRelUserTela.Close;
-  DM.QRelUserTela.SQL.Clear;
-  DM.QRelUserTela.SQL.Text := 'select * from rel_usuario_tela where idTela = :idTela and idUsuario = :idUsuario';
-  DM.QRelUserTela.Parameters.ParamByName('idTela').Value := DM.QPTela.FieldByName('id').AsInteger;
-  DM.QRelUserTela.Parameters.ParamByName('idUsuario').Value := idUsuarioLogado;
-  DM.QRelUserTela.Open;
+  DM.MPermissoes.Close;
+  DM.QPermissoes.Close;
+  DM.QPermissoes.Parameters.ParamByName('id').Value := DM.MLoginid.Value;
+  DM.QPermissoes.Open;
+  DM.MPermissoes.Open;
+
+  FMenu.MIUsuarios.Visible := DM.MPermissoes.Locate('name', VarArrayOf([FMenu.MIUsuarios.Hint]), []);
+  FMenu.MITela.Visible := DM.MPermissoes.Locate('name', VarArrayOf([FMenu.MITela.Hint]), []);
+  FMenu.MIAlunos.Visible := DM.MPermissoes.Locate('name', VarArrayOf([FMenu.MIAlunos.Hint]), []);
 end;
 
 procedure TFMenu.MIAlunosClick(Sender: TObject);
 begin
-  acessarTela('FAluno');
+  abrirForm(FMenu.MIAlunos.Hint);
   verificarPermissao();
-
-  if not(DM.QRelUserTela.IsEmpty) then begin
-    FAluno.ShowModal;
-  end
-  else
-    ShowMessage('Usuário sem permissão de acesso!');
 end;
 
 procedure TFMenu.MITelaClick(Sender: TObject);
 begin
-  acessarTela('FTela');
+  abrirForm(FMenu.MITela.Hint);
   verificarPermissao();
-  DM.QPTela.SQL.Text := 'select * from tela';
-
-  if not(DM.QRelUserTela.IsEmpty) then begin
-    FTela.ShowModal;
-  end
-  else
-    ShowMessage('Usuário sem permissão de acesso!');
 end;
 
 procedure TFMenu.MIUsuariosClick(Sender: TObject);
 begin
-  acessarTela('FUsuario');
+  abrirForm(FMenu.MIUsuarios.Hint);
   verificarPermissao();
-
-  if not(DM.QRelUserTela.IsEmpty) then begin
-    FUsuario.ShowModal;
-  end
-  else
-    ShowMessage('Usuário sem permissão de acesso!');
 end;
 
 procedure TFMenu.Sair1Click(Sender: TObject);
 begin
   FMenu.Close;
+end;
+
+procedure TFMenu.abrirForm(nome: string);
+var
+  persistentClass: TPersistentClass;
+begin
+  persistentClass := Getclass('T' + trim(nome));
+  if (persistentClass <> nil) then
+  begin
+    with tFormClass(persistentClass).Create(Application) do
+      try
+        Name := nome;
+        ShowModal;
+      finally
+        Free;
+        tFormClass(persistentClass) := nil;
+      end;
+  end;
+
 end;
 
 end.

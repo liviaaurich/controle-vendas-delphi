@@ -1,6 +1,6 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 426
+  Height = 590
   Width = 578
   object DBConnection: TADOConnection
     Connected = True
@@ -36,7 +36,7 @@ object DM: TDM
     AfterPost = MAlunoAfterPost
     AfterCancel = MAlunoAfterCancel
     AfterDelete = MAlunoAfterDelete
-    Left = 312
+    Left = 328
     Top = 32
     object MAlunoidAluno: TAutoIncField
       DisplayLabel = 'id Aluno'
@@ -107,7 +107,7 @@ object DM: TDM
   end
   object PAluno: TDataSetProvider
     DataSet = QAluno
-    Left = 232
+    Left = 240
     Top = 32
   end
   object QUsuarios: TADOQuery
@@ -121,7 +121,7 @@ object DM: TDM
   end
   object PUsuarios: TDataSetProvider
     DataSet = QUsuarios
-    Left = 232
+    Left = 240
     Top = 96
   end
   object MUsuarios: TClientDataSet
@@ -132,7 +132,7 @@ object DM: TDM
     AfterCancel = MUsuariosAfterCancel
     AfterDelete = MUsuariosAfterDelete
     AfterScroll = MUsuariosAfterScroll
-    Left = 312
+    Left = 328
     Top = 96
     object MUsuariosid: TAutoIncField
       FieldName = 'id'
@@ -153,7 +153,7 @@ object DM: TDM
   end
   object PPTela: TDataSetProvider
     DataSet = QPTela
-    Left = 232
+    Left = 240
     Top = 160
   end
   object MPTela: TClientDataSet
@@ -163,7 +163,7 @@ object DM: TDM
     AfterPost = MPTelaAfterPost
     AfterCancel = MPTelaAfterCancel
     AfterDelete = MPTelaAfterDelete
-    Left = 312
+    Left = 328
     Top = 160
     object MPTelaid: TAutoIncField
       FieldName = 'id'
@@ -180,7 +180,7 @@ object DM: TDM
   end
   object DSPTela: TDataSource
     DataSet = MPTela
-    Left = 392
+    Left = 416
     Top = 160
   end
   object QPTela: TADOQuery
@@ -215,12 +215,12 @@ object DM: TDM
   end
   object PUserTela: TDataSetProvider
     DataSet = QUserTela
-    Left = 232
+    Left = 240
     Top = 288
   end
   object DSUserTela: TDataSource
     DataSet = MUserTela
-    Left = 392
+    Left = 416
     Top = 288
   end
   object MUserTela: TClientDataSet
@@ -230,7 +230,7 @@ object DM: TDM
     AfterPost = MUserTelaAfterPost
     AfterCancel = MUserTelaAfterCancel
     AfterDelete = MUserTelaAfterDelete
-    Left = 312
+    Left = 328
     Top = 288
     object MUserTelaidUsuario: TIntegerField
       FieldName = 'idUsuario'
@@ -270,7 +270,7 @@ object DM: TDM
   end
   object PNotUserTela: TDataSetProvider
     DataSet = QNotUserTela
-    Left = 232
+    Left = 240
     Top = 352
   end
   object MNotUserTela: TClientDataSet
@@ -280,7 +280,7 @@ object DM: TDM
     AfterPost = MNotUserTelaAfterPost
     AfterCancel = MNotUserTelaAfterCancel
     AfterDelete = MNotUserTelaAfterDelete
-    Left = 312
+    Left = 328
     Top = 352
     object MNotUserTelaid: TAutoIncField
       FieldName = 'id'
@@ -297,7 +297,7 @@ object DM: TDM
   end
   object DSNotUserTela: TDataSource
     DataSet = MNotUserTela
-    Left = 392
+    Left = 416
     Top = 352
   end
   object QRelUserTela: TADOQuery
@@ -311,7 +311,7 @@ object DM: TDM
   end
   object PRelUserTela: TDataSetProvider
     DataSet = QRelUserTela
-    Left = 232
+    Left = 240
     Top = 224
   end
   object MRelUserTela: TClientDataSet
@@ -321,7 +321,7 @@ object DM: TDM
     AfterPost = MRelUserTelaAfterPost
     AfterCancel = MRelUserTelaAfterCancel
     AfterDelete = MRelUserTelaAfterDelete
-    Left = 312
+    Left = 328
     Top = 224
     object MRelUserTelaidUsuario: TIntegerField
       FieldName = 'idUsuario'
@@ -344,7 +344,96 @@ object DM: TDM
   end
   object DSRelUserTela: TDataSource
     DataSet = MRelUserTela
-    Left = 392
+    Left = 416
     Top = 224
+  end
+  object QLogin: TADOQuery
+    Connection = DBConnection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select id, login, senha, email from usuarios')
+    Left = 152
+    Top = 416
+  end
+  object PLogin: TDataSetProvider
+    DataSet = QLogin
+    Left = 240
+    Top = 416
+  end
+  object MLogin: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'PLogin'
+    Left = 328
+    Top = 416
+    object MLoginid: TAutoIncField
+      FieldName = 'id'
+      ReadOnly = True
+    end
+    object MLoginlogin: TStringField
+      FieldName = 'login'
+      Size = 30
+    end
+    object MLoginsenha: TStringField
+      FieldName = 'senha'
+      Size = 30
+    end
+    object MLoginemail: TStringField
+      FieldName = 'email'
+      Size = 30
+    end
+  end
+  object DSLogin: TDataSource
+    DataSet = MLogin
+    Left = 416
+    Top = 416
+  end
+  object QPermissoes: TADOQuery
+    Connection = DBConnection
+    CursorType = ctStatic
+    BeforeOpen = QPermissoesBeforeOpen
+    Parameters = <
+      item
+        Name = 'id'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'select rel.idUsuario, rel.idTela, t.name from tela t, rel_usuari' +
+        'o_tela rel where t.id = rel.idTela and rel.idUsuario = :id')
+    Left = 152
+    Top = 488
+  end
+  object PPermissoes: TDataSetProvider
+    DataSet = QPermissoes
+    Left = 240
+    Top = 488
+  end
+  object MPermissoes: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'PPermissoes'
+    Left = 328
+    Top = 488
+    object MPermissoesidUsuario: TIntegerField
+      FieldName = 'idUsuario'
+    end
+    object MPermissoesidTela: TIntegerField
+      FieldName = 'idTela'
+    end
+    object MPermissoesname: TStringField
+      FieldName = 'name'
+      Size = 10
+    end
+  end
+  object DSPermissoes: TDataSource
+    DataSet = MPermissoes
+    Left = 416
+    Top = 488
   end
 end

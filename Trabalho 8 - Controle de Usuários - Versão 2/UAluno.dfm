@@ -9,15 +9,15 @@ inherited FAluno: TFAluno
   TextHeight = 13
   inherited Panel1: TPanel
     Width = 657
-    ExplicitWidth = 735
+    ExplicitWidth = 657
     inherited ToolBar1: TToolBar
       Left = 456
-      ExplicitLeft = 534
+      ExplicitLeft = 456
     end
   end
   inherited GCabecalho: TGroupBox
     Width = 657
-    ExplicitWidth = 735
+    ExplicitWidth = 657
     object Label2: TLabel
       Left = 16
       Top = 24
@@ -59,17 +59,14 @@ inherited FAluno: TFAluno
   inherited PageControl: TPageControl
     Width = 657
     Height = 376
-    ActivePage = tbInfo
-    ExplicitWidth = 735
+    ExplicitWidth = 657
     ExplicitHeight = 376
     inherited tbInfo: TTabSheet
-      ExplicitWidth = 727
+      ExplicitWidth = 649
       ExplicitHeight = 348
       inherited GInfo: TGroupBox
         Width = 649
         Height = 348
-        ExplicitLeft = -3
-        ExplicitTop = -3
         ExplicitWidth = 649
         ExplicitHeight = 348
         object Label5: TLabel

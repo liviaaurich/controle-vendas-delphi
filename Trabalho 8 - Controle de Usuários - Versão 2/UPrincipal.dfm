@@ -1,6 +1,7 @@
 object FLogin: TFLogin
   Left = 0
   Top = 0
+  ActiveControl = btnEntrar
   Caption = 'Acesso'
   ClientHeight = 164
   ClientWidth = 282
@@ -51,10 +52,11 @@ object FLogin: TFLogin
     Top = 83
     Width = 201
     Height = 21
+    PasswordChar = '*'
     TabOrder = 2
   end
   object DSDataSet: TDataSource
-    DataSet = DM.MUsuarios
+    DataSet = DM.MLogin
     Left = 36
     Top = 112
   end

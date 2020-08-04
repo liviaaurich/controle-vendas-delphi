@@ -41,4 +41,12 @@ begin
   DM.MPTela.Open;
 end;
 
+Initialization
+
+RegisterClass(TFTela);
+
+Finalization
+
+UnRegisterClass(TFTela);
+
 end.

@@ -88,5 +88,13 @@ begin
   DM.MUserTela.Open;
 end;
 
+Initialization
+
+RegisterClass(TFUsuario);
+
+Finalization
+
+UnRegisterClass(TFUsuario);
+
 end.
 

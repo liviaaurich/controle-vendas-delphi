@@ -170,8 +170,8 @@ end;
 procedure TFTelaBase.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   DSDataSet.DataSet.Close;
-  Action := caFree;
-  TFTelaBase(Sender) := Nil;
+//  Action := caFree;
+//  TFTelaBase(Sender) := Nil;
 end;
 
 procedure TFTelaBase.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
