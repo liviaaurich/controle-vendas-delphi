@@ -1,0 +1,87 @@
+USE [Trabalho_05]
+GO
+
+/****** Object:  Table [dbo].[aluno]    Script Date: 02/08/2020 18:46:39 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[aluno](
+	[idAluno] [int] IDENTITY(1,1) NOT NULL,
+	[nome] [varchar](30) NULL,
+	[cidade] [varchar](30) NULL,
+	[estado] [varchar](30) NULL,
+	[dtNascimento] [datetime] NULL,
+	[cpf] [varchar](14) NULL,
+	[matricula] [varchar](10) NULL,
+	[sexo] [varchar](10) NULL,
+	[observacoes] [text] NULL,
+	[bolsista] [bit] NULL,
+	[bolsa] [float] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE [dbo].[tela](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [varchar](10) NOT NULL,
+	[descricao] [varchar](30) NOT NULL,
+ CONSTRAINT [PK_tela] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE [dbo].[usuarios](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[login] [varchar](30) NOT NULL,
+	[senha] [varchar](30) NOT NULL,
+	[email] [varchar](30) NULL,
+ CONSTRAINT [PK_usuarios] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE [dbo].[rel_usuario_tela](
+	[idUsuario] [int] NOT NULL,
+	[idTela] [int] NOT NULL,
+	[inserir] [bit] NULL,
+	[alterar] [bit] NULL,
+	[excluir] [bit] NULL,
+	[imprimir] [bit] NULL,
+ CONSTRAINT [PK_rel_usuario_tela] PRIMARY KEY CLUSTERED 
+(
+	[idUsuario] ASC,
+	[idTela] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[rel_usuario_tela]  WITH CHECK ADD  CONSTRAINT [FK_rel_usuario_tela_tela] FOREIGN KEY([idTela])
+REFERENCES [dbo].[tela] ([id])
+GO
+
+ALTER TABLE [dbo].[rel_usuario_tela] CHECK CONSTRAINT [FK_rel_usuario_tela_tela]
+GO
+
+ALTER TABLE [dbo].[rel_usuario_tela]  WITH CHECK ADD  CONSTRAINT [FK_rel_usuario_tela_usuarios] FOREIGN KEY([idUsuario])
+REFERENCES [dbo].[usuarios] ([id])
+GO
+
+ALTER TABLE [dbo].[rel_usuario_tela] CHECK CONSTRAINT [FK_rel_usuario_tela_usuarios]
+GO
+
+
+
+
+
